@@ -4,6 +4,6 @@
         企鹅公装网.每天金龟求精
     </a>
     <div class="float-right">
-        <a href="/about">关于</a>
+        <a href="{{ route('about') }}">关于</a>
     </div>
 </footer>
