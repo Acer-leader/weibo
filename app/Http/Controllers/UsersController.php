@@ -12,7 +12,6 @@ class UsersController extends Controller
     }
 
     //个人用户展示
-
     public function show(User $user)
     {
         return view('users.show',compact('user'));

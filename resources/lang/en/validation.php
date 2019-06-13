@@ -126,12 +126,27 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
+    //可以定义自己的错误信息
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'name' => [
+            'required' => '名称不能为空',
+            'max' => '名称最大50个字符',
+        ],
+        'email' => [
+            'required' => '邮箱地址不能为空',
+            'email' => '邮箱格式不正确',
+            'unique:users'=> '邮箱已经注册',
+        ],
+        'password' => [
+            'required' => '密码不能为空',
+            'min' => '密码不能少于6位',
+            'confirmed' => '俩次密码输入不一致',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
