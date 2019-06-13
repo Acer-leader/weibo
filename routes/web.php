@@ -21,3 +21,5 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('/signup', 'UsersController@create')->name('signup');
 //资源路由  资源名称  资源控制器
 Route::resource('users','UsersController');
+
+Route::post('users','UsersController@store')->name('users.store');
