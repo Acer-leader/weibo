@@ -8,8 +8,8 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button">
                     {{ Auth::user()->name }}
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">个</a>
+                <div class="" aria-labelledby="">
+                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}"></a>
                         <a class="dropdown-item" href="#">编辑资料</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" id="logout" href="#">
@@ -18,7 +18,16 @@
                                 {{ method_field('DELETE') }}
                                 <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
                             </form>
+
                         </a>
+                    <script>
+                        $(function () {
+                            $("#navbarDropdown").click(function () {
+                                $(this).text("dropdown-menu").is(":hidden");
+                                $("#dropdown-menu").slideToggle();
+                            })
+                        })
+                    </script>
                 </div>
             </li>
             @else
