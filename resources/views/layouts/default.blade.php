@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title','weibo app')-y1wanghui@163.com</title>
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/sheet.css">
-{{--    <link rel="stylesheet" href="{{ mix('css/app.css') }}">--}}
+
 </head>
 <body>
     @include('layouts._header')
@@ -16,5 +17,8 @@
             @include('layouts._footer')
         </div>
     </div>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+
 </body>
 </html>
