@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request\validae;
 use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller

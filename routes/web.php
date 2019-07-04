@@ -40,3 +40,5 @@ Route::get('login','SessionsController@create')->name('login');
 Route::post('login','SessionsController@store')->name('login');
 //删除会话
 Route::delete('logout','SessionsController@destroy')->name('logout');
+//用户修改
+Route::get('user/{user}/edit','UsersController@edit')->name('user.edit');
