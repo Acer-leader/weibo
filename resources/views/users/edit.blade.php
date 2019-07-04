@@ -38,8 +38,6 @@
                 <input type="password" name="password_confirmation" class="form-control" value="{{ old('password') }}">
             </div>
             <button type="submit" class="btn btn-primary">更新</button>
-
-
         </form>
         </div>
     </div>

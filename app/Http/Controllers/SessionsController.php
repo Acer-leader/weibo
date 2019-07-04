@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
+    //登录后用户限制访问注册页面
+    public function __construct()
+    {
+        $this->middleware('guest',[
+            'only' => ['create']
+        ]);
+    }
+
     //创建create动作展示登录视图
     public function create()
     {
@@ -24,7 +32,9 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials,$request->has('remember'))){
             //登录成功后的相关操作
             session()->flash('success','欢迎回来');
-            return redirect()->route('users.show',[Auth::user()]);
+            //用户没登录访问其他页面 之后登录跳转其他页面
+            $fallback = route('users.show',Auth::user());
+            return redirect()->intended($fallback);
         }else{
             //登录失败后的相关操作
             session()->flash('danger','您的邮箱或者密码不匹配');

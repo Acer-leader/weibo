@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
+    //过滤位登录用户可操作update 登录 等 动作
+    public function __construct()
+    {
+        $this->middleware('auth',[
+            'except'=>['show','create','store']
+        ]);
+        $this->middleware('guest',[
+           'only' => ['create']
+        ]);
+    }
     //注册页面
     public function create()
     {
@@ -39,6 +49,8 @@ class UsersController extends Controller
     //用户修改展示页面
     public function edit(User $user)
     {
+        //authorize 方法来验证用户授权策略。
+        $this->authorize('update',$user);
         return view('users.edit',compact('user'));
     }
 
@@ -46,6 +58,8 @@ class UsersController extends Controller
 
     public function update(User $user,Request $request)
     {
+        //authorize 方法来验证用户授权策略。
+        $this->authorize('update',$user);
         //规则
         $this->validate($request,[
            'name'=>'required|max:50',
