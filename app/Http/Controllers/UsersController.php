@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class UsersController extends Controller
 {
     //过滤位登录用户可操作update 登录 等 动作
@@ -15,6 +16,12 @@ class UsersController extends Controller
         $this->middleware('guest',[
            'only' => ['create']
         ]);
+    }
+
+    public function index()
+    {
+        $users = User::paginate(5);
+        return view('users.index', compact('users'));
     }
     //注册页面
     public function create()
@@ -55,7 +62,6 @@ class UsersController extends Controller
     }
 
     //更新页面动作
-
     public function update(User $user,Request $request)
     {
         //authorize 方法来验证用户授权策略。
@@ -74,5 +80,13 @@ class UsersController extends Controller
        $user->update($data);
         session()->flash('success','个人资料更新成功');
         return redirect()->route('users.show',$user);
+    }
+    //删除操作
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy',$user);
+        $user->delete();
+        session()->flash('success','成功删除用户');
+        return back();
     }
 }
