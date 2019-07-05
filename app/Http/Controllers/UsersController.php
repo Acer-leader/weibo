@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Mail;
 class UsersController extends Controller
 {
     //过滤位登录用户可操作update 登录 等 动作
     public function __construct()
     {
         $this->middleware('auth',[
-            'except'=>['show','create','store']
+            'except'=>['show','create','store','confirmEmail']
         ]);
         $this->middleware('guest',[
            'only' => ['create']
@@ -49,8 +49,38 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+
+        //发送邮件激活并登录
+        $this->sendEmailConfirmationTo($user);
+        session()->flash('success','验证邮件已经发送到邮箱');
+        return redirect('/');
+//        Auth::login($user);
+//        session()->flash('success','欢迎 你将开始一段新的旅程');
+//        return redirect()->route('users.show',[$user]);
+
+    }
+    public function sendEmailConfirmationTo($user)
+    {
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $from = 'y1wanghui@163.com';
+        $name = '你大爷';
+        $to = $user->email;
+        $subject = "感谢注册";
+        Mail::send($view,$data,function ($message) use($from,$name,$to,$subject) {
+            $message->from($from,$name)->to($to)->subject($subject);
+        });
+    }
+    //邮件激活操作
+    public function confirmEmail($token)
+    {
+        $user = User::where('activation_token',$token)->firstOrFail();
+        $user->activated = true;
+        $user->activation_token = null;
+        $user->save();
+
         Auth::login($user);
-        session()->flash('success','欢迎 你将开始一段新的旅程');
+        session()->flash('success','恭喜你激活成功');
         return redirect()->route('users.show',[$user]);
     }
     //用户修改展示页面
