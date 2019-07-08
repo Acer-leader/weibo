@@ -63,11 +63,11 @@ class UsersController extends Controller
     {
         $view = 'emails.confirm';
         $data = compact('user');
-        $from = 'y1wanghui@163.com';
-        $name = '你大爷';
+//        $from = 'y1wanghui@163.com'; 邮件发送已经配置
+        //$name = '你大爷';  名字已经配置
         $to = $user->email;
         $subject = "感谢注册";
-        Mail::send($view,$data,function ($message) use($from,$name,$to,$subject) {
+        Mail::send($view,$data,function ($message) use(/**$from,$name,*/$to,$subject) {
             $message->from($from,$name)->to($to)->subject($subject);
         });
     }
