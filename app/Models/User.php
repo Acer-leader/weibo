@@ -63,6 +63,7 @@ class User extends Authenticatable
             $user->activation_token = str_random(30);
         });
     }
+
     //个人用户一个人拥有多条微博展示
     public function statuses()
     {
@@ -72,6 +73,40 @@ class User extends Authenticatable
     public function feed()
     {
         return $this->statuses()
-            ->orderBy('created_at','desc');
+            ->orderBy('created_at', 'desc');
+    }
+
+    //粉丝列表
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    //关注的人
+    public function followings()
+    {
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+
+    //关注操作
+    public function follow($user_ids)
+    {
+        if ( !is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->sync($user_ids,false);
+    }
+    //取消关注
+    public function unfollow($user_ids)
+    {
+        if (!is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->detach($user_ids);
+    }
+    //判断用户是否关注了么偶个人
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contains($user_id);
     }
 }
