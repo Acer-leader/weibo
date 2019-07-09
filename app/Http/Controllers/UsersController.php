@@ -29,10 +29,12 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    //个人用户展示
+    //个人用户一个人拥有多条微博展示
     public function show(User $user)
     {
-        return view('users.show',compact('user'));
+        $statuses = $user->statuses()->orderBy('created_at','desc')->
+            paginate(10);
+        return view('users.show',compact('user','statuses'));
     }
 
     public function store(Request $request)

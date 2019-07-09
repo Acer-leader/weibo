@@ -6,14 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
-    //一条微博属于一个用户
+    //微博模型指定 一条微博属于一个用户
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    //yi dui duo
-    public function statues()
-    {
-        return $this->hasMany(Status::class);
-    }
+
 }
