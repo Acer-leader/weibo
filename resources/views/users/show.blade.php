@@ -5,10 +5,13 @@
         <div class="offset-md-2 col-md-8">
             <div class="col-md-12">
                 <div class="offset-md-2 col-md-8">
-                    <section>
+                    <section style="text-align: center">
                         @include('shared._user_info',['user'=>$user])
                     </section>
-                    <section class="status">
+                    <section class="stats mt-2" style="text-align: center">
+                        @include('shared._stats',['user' =>$user])
+                    </section>
+                    <section class="status" >
                         @if($statuses->count()>0)
                             <ul class="list-unstyled">
                                 @foreach($statuses as $status)
